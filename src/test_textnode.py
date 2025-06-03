@@ -22,11 +22,11 @@ class TestTextNode(unittest.TestCase):
 
     def test_no_url(self):
         node = TextNode("This is a text node", TextType.BOLD)
-        node2 = TextNode("This is some other text", TextType.NORMAL)
+        node2 = TextNode("This is some other text", TextType.TEXT)
         self.assertNotEqual(node, node2)
     
     def test_repr(self):
-        node = TextNode("This is a text node", TextType.NORMAL, "https://www.boot.dev")
+        node = TextNode("This is a text node", TextType.TEXT, "https://www.boot.dev")
         self.assertEqual(
                 "TextNode(This is a text node, text, https://www.boot.dev)", repr(node)
         )
