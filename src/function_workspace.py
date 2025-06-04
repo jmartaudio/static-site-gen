@@ -39,6 +39,30 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
         new_nodes.extend(split_nodes)
     return new_nodes
 
+# node = TextNode(
+#    "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png) and another ![second image](https://i.imgur.com/3elNhQu.png)",
+#    TextType.TEXT,
+
+def spilt_nodes_image(old_nodes):
+    new_nodes= []
+    for old_node in old_nodes:
+        if old_node.text_type.value != "text":
+            new_nodes.append(old_node)
+            continue
+        split_nodes_text = []
+        split_nodes_img = []
+        text_parts = old_node.split(extract_markdown_images(old_node))
+        for part in text_parts:
+            split_nodes_text.append((part, TextType.TEXT))
+        img_parts = extract_markdown_images(old_node)
+        for part in img_parts:
+            split_nodes_img.append((part[0], TextType.IMAGE, part[1]))
+        new_nodes.extend(zip(split_nodes_text, split_nodes_img))
+    print(new_nodes)
+    return new_nodes
+
+
+
 def extract_markdown_url(text):
     extracted_url = re.findall(r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
     if not extracted_url:
