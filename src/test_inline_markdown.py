@@ -1,6 +1,6 @@
 import unittest
 from function_workspace import (
-    split_nodes_delimiter, text_node_to_html_node
+    split_nodes_delimiter, text_node_to_html_node, split_nodes_image
 )
 
 from textnode import TextNode, TextType
@@ -162,7 +162,12 @@ class TestInlineMarkdown(unittest.TestCase):
         self.assertEqual(new_nodes[0].text, "__This is text that is all italic__")
         self.assertEqual(new_nodes[0].text_type.value, "italic")
 
-
+    def test_split_nodes_image(self):
+        node = TextNode(
+    "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png) and another ![second image](https://i.imgur.com/3elNhQu.png)",
+    TextType.TEXT,)
+        new_nodes = split_nodes_image(node)
+        self.assertEqual(new_nodes[0][0].text, "This is text with an ")
 
 if __name__ == "__main__":
     unittest.main()
