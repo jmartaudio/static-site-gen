@@ -13,7 +13,7 @@ class Blocks(unittest.TestCase):
         block_type = block_to_block_type(block)
         self.assertEqual(block_type, BlockType.QUOTE)
     def test_blocks_to_blocktype_code(self):
-        block = "```This is a code block```"
+        block = "```\nThis is a code block\n```"
         block_type = block_to_block_type(block)
         self.assertEqual(block_type, BlockType.CODE)
     def test_blocks_to_blocktype_ulist(self):
@@ -33,7 +33,7 @@ class Blocks(unittest.TestCase):
         block_type = block_to_block_type(block)
         self.assertEqual(block_type, BlockType.PARAGRAPH)
 
-    def test_block_to_block_types_from_boot_dev(self):
+    def test_block_to_block_types(self):
         block = "# heading"
         self.assertEqual(block_to_block_type(block), BlockType.HEADING)
         block = "```\ncode\n```"
@@ -111,29 +111,20 @@ This is the same paragraph on a new line
         ],
     )
 
-    def test_markdown_to_html_node_paragraphs(self):
+    def test_paragraphs(self):
         md = """
-This is **bolded** paragraph
-text in a p
-tag here
+This is **bolded** paragraph text in a p tag here
 
 This is another paragraph with _italic_ text and `code` here
-
 """
 
         node = markdown_to_html_node(md)
-        self.assertEqual(node, "something")
-        
-
-
-"""
         html = node.to_html()
         self.assertEqual(
-            html,
+        html,
         "<div><p>This is <b>bolded</b> paragraph text in a p tag here</p><p>This is another paragraph with <i>italic</i> text and <code>code</code> here</p></div>",
     )
 
-"""
 
 if __name__ == "__main__":
     unittest.main()
