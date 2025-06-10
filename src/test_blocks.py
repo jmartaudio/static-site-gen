@@ -116,6 +116,7 @@ This is the same paragraph on a new line
 This is **bolded** paragraph text in a p tag here
 
 This is another paragraph with _italic_ text and `code` here
+
 """
 
         node = markdown_to_html_node(md)
@@ -123,6 +124,48 @@ This is another paragraph with _italic_ text and `code` here
         self.assertEqual(
         html,
         "<div><p>This is <b>bolded</b> paragraph text in a p tag here</p><p>This is another paragraph with <i>italic</i> text and <code>code</code> here</p></div>",
+    )
+
+    def test_codeblock(self):
+        md = """
+```
+This is text that _should_ remain
+the **same** even with inline stuff
+```
+"""
+
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+        html,
+        "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>",
+    )
+
+    def test_unordered_list_with_toppings(self):
+        md = """
+- this is **item**
+- this is _another_ item
+- this is a different thing
+"""
+
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+        html,
+        "<div><ul><li> this is <b>item</b></li><li> this is <i>another</i> item</li><li> this is a different thing</li></ul></div>"
+    )
+    def test_ordered_list_with_toppings(self):
+        md = """
+1. this is **item**
+2. this is _another_ item
+3. this is a different thing
+"""
+
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+        html,
+        "<div><ol><li>1. this is <b>item</b></li><li>2. this is <i>another</i> item</li><li>3. this is a different thing</li></ol></div>"
     )
 
 
