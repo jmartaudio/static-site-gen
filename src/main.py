@@ -1,9 +1,15 @@
 import os
 import shutil
+import sys
 from os_interact import copy_files_recursive, generate_page, get_content_recursive, makedirs_for_content
 
+if len(sys.argv) > 1:
+    basepath = sys.argv[1]
+else:
+    basepath = '/'
+
 dir_path_static = "./static"
-dir_path_public = "./public"
+dir_path_public = "./docs"
 dir_path_content = "./content"
 template_path = "./template.html"
 
@@ -19,7 +25,6 @@ def main():
     makedirs_for_content(all_content, dir_path_content, dir_path_public)
 
     print("Generating page...")
-    print(all_content)
     for item in all_content:
         if os.path.isfile(item):
             dest_path = item.replace(str(dir_path_content), str(dir_path_public))
@@ -28,6 +33,7 @@ def main():
                     item,
                     template_path,
                     os.path.join(dest_path_html),
+                    basepath,
             )
     
 main()

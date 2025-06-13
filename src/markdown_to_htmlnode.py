@@ -1,6 +1,6 @@
 from htmlnode import ParentNode
 from textnode import TextNode, TextType
-from function_workspace import text_to_textnodes, text_node_to_html_node
+from inline_markdown import text_to_textnodes, text_node_to_html_node
 
 from enum import Enum
 
